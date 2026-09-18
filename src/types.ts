@@ -30,11 +30,12 @@ export interface SentenceItem {
 }
 
 export type QuizType =
-  | 'choose_word'        // 바른 낱말 고르기 (읽다 vs 익다 vs 일다)
-  | 'choose_sound'       // 올바른 발음 고르기 ([익따] vs [일따])
-  | 'fill_batchim'       // 빈칸 겹받침 채우기 (이__다 -> ㄺ)
+  | 'ox_quiz'            // OX 문제 (맞으면 O, 틀리면 X)
+  | 'choose_word'        // 올바른 맞춤법 낱말 고르기 (읽다 vs 익다)
+  | 'fill_batchim'       // 알맞은 겹받침 채우기 (ㄺ, ㄼ, ㅀ, ㅄ)
   | 'sentence_builder'   // 낱말 조립하기 ([책을] [읽다])
-  | 'situation_match';   // 코보인 연기 보고 맞는 문장 고르기
+  | 'situation_match'    // 상황에 맞는 올바른 표현 고르기
+  | 'find_error';        // 문장에서 틀린 표기를 바르게 고치기
 
 export interface QuizItem {
   id: string;

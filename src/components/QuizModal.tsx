@@ -191,15 +191,15 @@ export const QuizModal: React.FC<QuizModalProps> = ({
                     {currentItem.sentence.sentence}
                   </h3>
                   <button
-                    onClick={() => speakKorean(currentItem.sentence.sentence + ' 발음은 ' + currentItem.sentence.pronunciation)}
+                    onClick={() => speakKorean(currentItem.sentence.sentence)}
                     className="p-1.5 rounded-full bg-white hover:bg-orange-100 text-orange-600 border border-orange-200 shadow-2xs transition-colors cursor-pointer"
-                    title="소리 듣기"
+                    title="문장 듣기"
                   >
                     <Volume2 className="w-4 h-4" />
                   </button>
                 </div>
                 <div className="text-xs text-orange-600 font-bold mt-0.5">
-                  바른 소리: <span className="font-extrabold">{currentItem.sentence.pronunciation}</span>
+                  핵심 겹받침: <span className="font-extrabold text-slate-800">{currentItem.sentence.batchimWord}</span> ({currentItem.sentence.batchim})
                 </div>
                 <p className="text-xs text-slate-600 mt-1 max-w-md font-medium">
                   {currentItem.sentence.situationPrompt}
@@ -209,13 +209,21 @@ export const QuizModal: React.FC<QuizModalProps> = ({
 
             {/* Question Box */}
             <div className="w-full text-center mb-4">
+              <div className="inline-block px-2.5 py-0.5 bg-amber-100 text-amber-900 text-xs font-black rounded-md mb-1.5">
+                {currentItem.quiz.type === 'ox_quiz' && '⭕❌ 맞춤법 OX 퀴즈'}
+                {currentItem.quiz.type === 'choose_word' && '✨ 올바른 낱말 고르기'}
+                {currentItem.quiz.type === 'fill_batchim' && '🧩 알맞은 겹받침 넣기'}
+                {currentItem.quiz.type === 'find_error' && '🔍 바른 문장 찾기'}
+                {currentItem.quiz.type === 'situation_match' && '🐰 상황에 어울리는 표현'}
+                {currentItem.quiz.type === 'sentence_builder' && '🧩 낱말 카드 조립하기'}
+              </div>
               <h4 className="text-base sm:text-lg font-black text-slate-800">
                 {currentItem.quiz.question}
               </h4>
               {currentItem.quiz.questionSub && (
-                <p className="text-xs sm:text-sm text-slate-600 mt-1 font-semibold">
+                <div className="mt-2 p-2.5 bg-white rounded-xl border border-amber-200 inline-block max-w-md text-slate-700 font-bold text-sm">
                   "{currentItem.quiz.questionSub}"
-                </p>
+                </div>
               )}
             </div>
 
@@ -263,8 +271,86 @@ export const QuizModal: React.FC<QuizModalProps> = ({
                   })}
                 </div>
               </div>
+            ) : currentItem.quiz.type === 'ox_quiz' ? (
+              /* Big Tactile OX Buttons */
+              <div className="w-full max-w-sm grid grid-cols-2 gap-4 mb-4">
+                {currentItem.quiz.options.map((option, idx) => {
+                  const isSelected = selectedOption === option;
+                  const isO = option === 'O';
+                  return (
+                    <button
+                      key={idx}
+                      disabled={feedbackState !== 'idle'}
+                      onClick={() => setSelectedOption(option)}
+                      className={`py-6 px-4 rounded-3xl border-3 flex flex-col items-center justify-center gap-2 transition-all cursor-pointer font-black ${
+                        isSelected
+                          ? isO
+                            ? 'bg-emerald-500 text-white border-emerald-600 shadow-lg scale-103'
+                            : 'bg-rose-500 text-white border-rose-600 shadow-lg scale-103'
+                          : isO
+                          ? 'bg-emerald-50/80 text-emerald-800 border-emerald-200 hover:bg-emerald-100/70 hover:border-emerald-400 shadow-xs'
+                          : 'bg-rose-50/80 text-rose-800 border-rose-200 hover:bg-rose-100/70 hover:border-rose-400 shadow-xs'
+                      }`}
+                    >
+                      <span className="text-4xl sm:text-5xl font-black">
+                        {isO ? '⭕' : '❌'}
+                      </span>
+                      <span className="text-base sm:text-lg font-black tracking-wide">
+                        {isO ? '맞아요 (O)' : '틀려요 (X)'}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : currentItem.quiz.type === 'fill_batchim' ? (
+              /* Square Tiles for Batchim Selection */
+              <div className="w-full max-w-md grid grid-cols-4 gap-3 mb-4">
+                {currentItem.quiz.options.map((option, idx) => {
+                  const isSelected = selectedOption === option;
+                  return (
+                    <button
+                      key={idx}
+                      disabled={feedbackState !== 'idle'}
+                      onClick={() => setSelectedOption(option)}
+                      className={`p-4 rounded-2xl border-2 font-black text-2xl transition-all text-center cursor-pointer ${
+                        isSelected
+                          ? 'bg-orange-500 text-white border-orange-600 shadow-md scale-105'
+                          : 'bg-white text-slate-800 border-amber-200 hover:border-orange-400 hover:bg-amber-50/50 shadow-xs'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : currentItem.quiz.type === 'find_error' || currentItem.quiz.type === 'situation_match' ? (
+              /* Stacked Full-Width Choices for Long Sentences */
+              <div className="w-full max-w-lg flex flex-col gap-2.5 mb-4">
+                {currentItem.quiz.options.map((option, idx) => {
+                  const isSelected = selectedOption === option;
+                  return (
+                    <button
+                      key={idx}
+                      disabled={feedbackState !== 'idle'}
+                      onClick={() => setSelectedOption(option)}
+                      className={`p-3.5 sm:p-4 rounded-2xl border-2 font-black text-sm sm:text-base text-left transition-all cursor-pointer flex items-center gap-3 ${
+                        isSelected
+                          ? 'bg-orange-500 text-white border-orange-600 shadow-md scale-101'
+                          : 'bg-white text-slate-800 border-amber-200 hover:border-orange-400 hover:bg-amber-50/50 shadow-xs'
+                      }`}
+                    >
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
+                        isSelected ? 'bg-white text-orange-600' : 'bg-slate-100 text-slate-600'
+                      }`}>
+                        {idx + 1}
+                      </span>
+                      <span className="flex-1">{option}</span>
+                    </button>
+                  );
+                })}
+              </div>
             ) : (
-              /* Multiple Choice Option Buttons */
+              /* Standard 3-column / 1-column Option Buttons */
               <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4">
                 {currentItem.quiz.options.map((option, idx) => {
                   const isSelected = selectedOption === option;

@@ -183,7 +183,7 @@ export const SentenceDashboard: React.FC<SentenceDashboardProps> = ({
                   {item.sentence}
                 </h3>
                 <div className="text-xs text-orange-600 font-bold mt-0.5">
-                  소리: {item.pronunciation}
+                  겹받침 글자: <span className="font-black text-slate-800">{item.batchimWord}</span> ({item.batchim})
                 </div>
                 <p className="text-xs text-slate-500 mt-1 line-clamp-2 font-medium">
                   {item.meaning}
@@ -195,10 +195,10 @@ export const SentenceDashboard: React.FC<SentenceDashboardProps> = ({
                 <button
                   onClick={e => {
                     e.stopPropagation();
-                    speakKorean(item.sentence + ' 발음은 ' + item.pronunciation);
+                    speakKorean(item.sentence);
                   }}
                   className="p-1.5 rounded-xl bg-amber-50 hover:bg-orange-100 text-orange-600 transition-colors cursor-pointer"
-                  title="발음 듣기"
+                  title="문장 듣기"
                 >
                   <Volume2 className="w-4 h-4" />
                 </button>
@@ -261,16 +261,16 @@ export const SentenceDashboard: React.FC<SentenceDashboardProps> = ({
                     {inspectSentence.sentence}
                   </h3>
                   <button
-                    onClick={() => speakKorean(inspectSentence.sentence + ' 발음은 ' + inspectSentence.pronunciation)}
+                    onClick={() => speakKorean(inspectSentence.sentence)}
                     className="p-2 rounded-full bg-orange-100 text-orange-600 hover:bg-orange-200 cursor-pointer"
-                    title="발음 듣기"
+                    title="문장 듣기"
                   >
                     <Volume2 className="w-5 h-5" />
                   </button>
                 </div>
 
                 <div className="inline-block mt-1 px-3 py-1 bg-amber-100 text-amber-900 text-sm font-black rounded-full">
-                  바른 소리: <span className="text-orange-600 font-extrabold">{inspectSentence.pronunciation}</span>
+                  핵심 겹받침: <span className="text-orange-600 font-extrabold">{inspectSentence.batchimWord} ({inspectSentence.batchim})</span>
                 </div>
 
                 {/* Situation & Rule Explanation */}
