@@ -1,0 +1,6 @@
+{
+  "name": "코보인과 겹받침 모험 - 초등 1학년 국어 쑥쑥",
+  "description": "토끼 코보인과 함께 15개 겹받침 문장을 애니메이션과 듀오링고 스타일 퀴즈로 배우고 당근을 모아 친구들과 랭킹을 겨루는 초등 1학년 맞춤 학습 플랫폼",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
