@@ -198,8 +198,20 @@ export const QuizModal: React.FC<QuizModalProps> = ({
                     <Volume2 className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="text-xs text-orange-600 font-bold mt-0.5">
-                  핵심 겹받침: <span className="font-extrabold text-slate-800">{currentItem.sentence.batchimWord}</span> ({currentItem.sentence.batchim})
+                <div className="flex items-center justify-center gap-2 text-xs font-bold mt-1 flex-wrap">
+                  <span className="text-orange-600">
+                    겹받침: <span className="font-extrabold text-slate-800">{currentItem.sentence.batchimWord}</span> ({currentItem.sentence.batchim})
+                  </span>
+                  <span className="text-slate-300">•</span>
+                  <button
+                    type="button"
+                    onClick={() => speakKorean(`발음은 ${currentItem.sentence.pronunciation}`)}
+                    className="px-2 py-0.5 bg-amber-100 hover:bg-orange-200 text-amber-900 rounded-md font-black text-[11px] cursor-pointer transition-colors inline-flex items-center gap-0.5"
+                    title="표준 발음 듣기"
+                  >
+                    <span>표준 발음: {currentItem.sentence.pronunciation}</span>
+                    <Volume2 className="w-2.5 h-2.5 text-amber-700 ml-0.5" />
+                  </button>
                 </div>
                 <p className="text-xs text-slate-600 mt-1 max-w-md font-medium">
                   {currentItem.sentence.situationPrompt}

@@ -1,4 +1,4 @@
-// Web Audio API procedural sound engine & Web Speech API TTS for Elementary Korean
+// Web Audio API procedural sound engine & Web Speech API TTS for Koboin (Cute Boy Rabbit)
 
 class SoundEngine {
   private ctx: AudioContext | null = null;
@@ -6,7 +6,9 @@ class SoundEngine {
 
   private initCtx() {
     if (!this.ctx && typeof window !== 'undefined') {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioContextClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioContextClass) {
         this.ctx = new AudioContextClass();
       }
@@ -67,6 +69,30 @@ class SoundEngine {
     osc.stop(now + 0.2);
   }
 
+  // Play Koboin's cute cheerful bunny bounce
+  playKoboinBounce() {
+    if (!this.enabled) return;
+    this.initCtx();
+    if (!this.ctx) return;
+
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(587.33, now); // D5
+    osc.frequency.exponentialRampToValueAtTime(1174.66, now + 0.12); // D6
+
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.15);
+  }
+
   // Play celebratory fanfare
   playFanfare() {
     if (!this.enabled) return;
@@ -120,30 +146,61 @@ class SoundEngine {
 
 export const soundManager = new SoundEngine();
 
-// Text To Speech helper for 1st grade elementary learners
-export function speakKorean(text: string, rate = 0.85) {
+// Helper to pick the best voice for cute Korean boy rabbit (코보인)
+function getCuteBoyVoice(): SpeechSynthesisVoice | null {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  const koVoices = voices.filter(v => v.lang.includes('ko') || v.lang.includes('KR'));
+  if (koVoices.length === 0) return null;
+
+  // Prioritize male / young boy voices (e.g., InJoon, BongJin, MinHo, Male, etc.)
+  const boyVoice = koVoices.find(v =>
+    /injoon|인준|bongjin|봉진|minho|민호|male|boy|아이/i.test(v.name)
+  );
+  if (boyVoice) return boyVoice;
+
+  // Fallback to high quality natural Korean voice
+  const naturalVoice = koVoices.find(v => /natural|google|neural|kr/i.test(v.name));
+  return naturalVoice || koVoices[0];
+}
+
+// Pre-load voices on browser ready
+if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+}
+
+/**
+ * Text To Speech helper for 1st grade elementary learners
+ * Styled specifically for "코보인" (귀여운 씩씩한 남자 아이 토끼)
+ */
+export function speakKorean(text: string, rate = 0.98) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
     console.warn('Speech synthesis not supported');
     return;
   }
 
-  window.speechSynthesis.cancel(); // Stop any pending speech
+  // Cancel any ongoing speech
+  window.speechSynthesis.cancel();
 
-  const cleanText = text.replace(/\[.*?\]/g, (match) => {
-    // Speak bracketed phonetic nicely
-    return '발음은 ' + match.replace(/[\[\]]/g, '') + ' ';
+  // If text contains bracketed pronunciation like "[익따]", say "발음은 익따!" nicely
+  const cleanText = text.replace(/\[(.*?)\]/g, (_, p1) => {
+    return '발음은 ' + p1 + ' ';
   });
 
   const utterance = new SpeechSynthesisUtterance(cleanText);
   utterance.lang = 'ko-KR';
-  utterance.rate = rate; // slightly slower for young children
-  utterance.pitch = 1.15; // friendly, cheerful rabbit tone
 
-  // Pick Korean voice if available
-  const voices = window.speechSynthesis.getVoices();
-  const koVoice = voices.find(v => v.lang.includes('ko') || v.lang.includes('KR'));
-  if (koVoice) {
-    utterance.voice = koVoice;
+  // 귀여운 남자 아이 토끼 음색 설정 (High cheerful boy pitch & brisk friendly pace)
+  // Pitch 1.38 makes the voice sound distinctly like a bright, cute young boy
+  utterance.pitch = 1.38;
+  utterance.rate = rate; // 0.98 is clear and lively for elementary 1st graders
+  utterance.volume = 1.0;
+
+  const boyVoice = getCuteBoyVoice();
+  if (boyVoice) {
+    utterance.voice = boyVoice;
   }
 
   window.speechSynthesis.speak(utterance);

@@ -31,12 +31,13 @@ export const DuolingoPath: React.FC<DuolingoPathProps> = ({
           animationType="happy_wave"
           size="sm"
           className="shrink-0"
-          onClick={() => speakKorean('안녕 친구야! 오늘도 코보인과 함께 겹받침을 신나게 배워보자!')}
+          speechText="안녕! 난 씩씩한 남자 아이 토끼 코보인이야!"
+          onClick={() => speakKorean('안녕 친구야! 난 씩씩한 남자 아이 토끼 코보인이야! 오늘도 나랑 겹받침 신나게 달려보자!')}
         />
         <div className="flex-1 text-center sm:text-left">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-orange-500 text-white text-xs font-black rounded-full mb-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>오늘도 쑥쑥 코보인 응원</span>
+            <span>씩씩한 토끼 코보인의 응원</span>
           </div>
           <h2 className="text-lg sm:text-xl font-black text-slate-800">
             {progress.completedStages.length === 5
@@ -48,7 +49,7 @@ export const DuolingoPath: React.FC<DuolingoPathProps> = ({
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-center sm:justify-start gap-2">
             <button
-              onClick={() => speakKorean('책을 읽다, 무릎을 꿇다, 잔디를 밟다! 겹받침도 소리 내어 읽으면 아주 쉬워요!')}
+              onClick={() => speakKorean('책을 읽다, 무릎을 꿇다, 잔디를 밟다! 나처럼 씩씩하게 소리 내어 읽으면 진짜 쉬워! 헤헤!')}
               className="inline-flex items-center gap-1 px-3 py-1.5 bg-white hover:bg-orange-50 text-orange-700 text-xs font-bold rounded-xl border border-orange-200 shadow-2xs transition-colors cursor-pointer"
             >
               <Volume2 className="w-3.5 h-3.5 text-orange-500" />

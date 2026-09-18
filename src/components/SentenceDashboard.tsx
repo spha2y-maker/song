@@ -182,8 +182,22 @@ export const SentenceDashboard: React.FC<SentenceDashboardProps> = ({
                 <h3 className="text-lg font-black text-slate-800 group-hover:text-orange-600 transition-colors">
                   {item.sentence}
                 </h3>
-                <div className="text-xs text-orange-600 font-bold mt-0.5">
-                  겹받침 글자: <span className="font-black text-slate-800">{item.batchimWord}</span> ({item.batchim})
+                <div className="flex items-center justify-between text-xs mt-1">
+                  <span className="text-orange-600 font-bold">
+                    겹받침: <span className="font-black text-slate-800">{item.batchimWord}</span> ({item.batchim})
+                  </span>
+                  <button
+                    type="button"
+                    onClick={e => {
+                      e.stopPropagation();
+                      speakKorean(`발음은 ${item.pronunciation}`);
+                    }}
+                    className="px-2 py-0.5 bg-amber-100/80 hover:bg-orange-200 text-amber-900 rounded-md font-extrabold text-[11px] cursor-pointer transition-colors inline-flex items-center gap-0.5"
+                    title="발음 듣기"
+                  >
+                    <span>{item.pronunciation}</span>
+                    <Volume2 className="w-2.5 h-2.5 text-amber-700 ml-0.5" />
+                  </button>
                 </div>
                 <p className="text-xs text-slate-500 mt-1 line-clamp-2 font-medium">
                   {item.meaning}
@@ -269,8 +283,20 @@ export const SentenceDashboard: React.FC<SentenceDashboardProps> = ({
                   </button>
                 </div>
 
-                <div className="inline-block mt-1 px-3 py-1 bg-amber-100 text-amber-900 text-sm font-black rounded-full">
-                  핵심 겹받침: <span className="text-orange-600 font-extrabold">{inspectSentence.batchimWord} ({inspectSentence.batchim})</span>
+                <div className="flex items-center gap-2 mt-2 flex-wrap justify-center">
+                  <span className="px-3 py-1 bg-amber-100 text-amber-900 text-xs font-black rounded-full">
+                    겹받침: <strong className="text-orange-600">{inspectSentence.batchimWord}</strong> ({inspectSentence.batchim})
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => speakKorean(`표준 발음은 ${inspectSentence.pronunciation} 이에요!`)}
+                    className="px-3 py-1 bg-orange-100 hover:bg-orange-200 text-orange-900 text-xs font-extrabold rounded-full transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    title="표준 발음 듣기"
+                  >
+                    <span>표준 발음:</span>
+                    <strong className="text-orange-600">{inspectSentence.pronunciation}</strong>
+                    <Volume2 className="w-3.5 h-3.5 text-orange-500" />
+                  </button>
                 </div>
 
                 {/* Situation & Rule Explanation */}

@@ -14,7 +14,7 @@ interface CarrotFarmProps {
 export const CarrotFarm: React.FC<CarrotFarmProps> = ({ progress, onSelectCostume }) => {
   // Available costumes unlock rules
   const costumes = [
-    { id: 'default', name: '기본 코보인', req: 0, icon: '🐰', desc: '귀엽고 다정한 토끼 코보인' },
+    { id: 'default', name: '기본 코보인', req: 0, icon: '🐰', desc: '귀엽고 씩씩한 남자 아이 토끼 코보인' },
     { id: 'glasses', name: '책벌레 안경', req: 6, icon: '👓', desc: '당근 6개 모으면 오픈! 책을 잘 읽어요' },
     { id: 'cape', name: '용감한 망토', req: 15, icon: '🦸', desc: '당근 15개 모으면 오픈! 슈퍼 토끼!' },
     { id: 'crown', name: '황금 왕관', req: 25, icon: '👑', desc: '당근 25개 마스터 전용 왕관!' }
@@ -47,7 +47,7 @@ export const CarrotFarm: React.FC<CarrotFarmProps> = ({ progress, onSelectCostum
             animationType="celebrate"
             size="md"
             showSpeechBubble={true}
-            speechText="내 당근 밭이야! 멋지지?"
+            speechText="내 당근 밭이야! 내가 열심히 모았어, 헤헤!"
             onClick={() => {
               soundManager.playCarrotPop();
               speakKorean('당근을 많이 모아서 코보인에게 예쁜 모자와 망토를 입혀줘!');

@@ -58,11 +58,11 @@ export const SENTENCES_DATA: SentenceItem[] = [
     sentence: '무릎을 꿇다',
     batchimWord: '꿇다',
     batchim: 'ㅀ',
-    pronunciation: '[꿀따]',
+    pronunciation: '[꿀타]',
     meaning: '두 무릎을 바닥에 대고 몸을 낮춰요.',
     situationPrompt: '코보인이 두 손을 공손히 모으고 무릎을 꿇어 어른께 예절 바르게 인사해요.',
     animationType: 'kneeling',
-    keyRuleTip: "'무릎을 꿇다'의 '꿇'에는 'ㅀ' 받침을 써요!",
+    keyRuleTip: "'무릎을 꿇다'의 '꿇'에는 'ㅀ' 받침을 써요! [꿀타]로 소리 나요.",
     stageId: 1,
     quizzes: [
       {
@@ -114,11 +114,11 @@ export const SENTENCES_DATA: SentenceItem[] = [
     sentence: '구멍을 뚫다',
     batchimWord: '뚫다',
     batchim: 'ㅀ',
-    pronunciation: '[뚤따]',
+    pronunciation: '[뚤타]',
     meaning: '막힌 곳을 파거나 헤집어서 길을 내요.',
     situationPrompt: '코보인이 당근밭으로 가는 비밀 터널 구멍을 쏙 뚫고 뿅 나타났어요!',
     animationType: 'digging',
-    keyRuleTip: "'구멍을 뚫다'의 '뚫'에는 'ㅀ' 받침이 쓰여요!",
+    keyRuleTip: "'구멍을 뚫다'의 '뚫'에는 'ㅀ' 받침이 쓰여요! [뚤타]로 소리 나요.",
     stageId: 1,
     quizzes: [
       {
@@ -221,11 +221,11 @@ export const SENTENCES_DATA: SentenceItem[] = [
     sentence: '감기를 앓다',
     batchimWord: '앓다',
     batchim: 'ㅀ',
-    pronunciation: '[알따]',
+    pronunciation: '[알타]',
     meaning: '병에 걸려 몸이 쑤시고 아파요.',
     situationPrompt: '코보인이 목도리를 칭칭 감고 머리에 얼음주머니를 올린 채 에취 기침을 해요.',
     animationType: 'sick',
-    keyRuleTip: "'병을 앓다'는 'ㅀ' 받침이에요! '지식을 알다'와 구분해요.",
+    keyRuleTip: "'병을 앓다'는 'ㅀ' 받침이에요! [알타]로 소리 나며, '지식을 알다'와 구분해요.",
     stageId: 2,
     quizzes: [
       {

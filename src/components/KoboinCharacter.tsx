@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { SentenceItem } from '../types';
+import { soundManager, speakKorean } from '../utils/soundEffects';
 
 interface KoboinCharacterProps {
   animationType?: SentenceItem['animationType'] | 'celebrate' | 'idle' | 'happy_wave';
@@ -17,7 +18,7 @@ export const KoboinCharacter: React.FC<KoboinCharacterProps> = ({
   costume = 'default',
   size = 'md',
   showSpeechBubble = false,
-  speechText = '안녕! 나는 토끼 코보인이야!',
+  speechText = '안녕! 난 씩씩한 남자 아이 토끼 코보인이야!',
   onClick,
   className = ''
 }) => {
@@ -28,10 +29,19 @@ export const KoboinCharacter: React.FC<KoboinCharacterProps> = ({
     xl: 'w-80 h-80'
   };
 
+  const handleCharacterClick = () => {
+    soundManager.playKoboinBounce();
+    if (onClick) {
+      onClick();
+    } else {
+      speakKorean(speechText);
+    }
+  };
+
   return (
     <div
       className={`relative flex flex-col items-center select-none ${className}`}
-      onClick={onClick}
+      onClick={handleCharacterClick}
     >
       {/* Speech bubble for Koboin */}
       {showSpeechBubble && speechText && (
@@ -308,6 +318,15 @@ export const KoboinCharacter: React.FC<KoboinCharacterProps> = ({
           ) : (
             /* Sweet smile */
             <path d="M 114,130 Q 120,136 126,130" fill="none" stroke="#5D4037" strokeWidth="2.2" strokeLinecap="round" />
+          )}
+
+          {/* Cute Boy Bunny Blue Bowtie */}
+          {animationType !== 'sick' && animationType !== 'reluctant' && (
+            <g transform="translate(120, 142)">
+              <polygon points="-9,-5 0,-1.5 -9,5" fill="#3B82F6" stroke="#1D4ED8" strokeWidth="1.2" />
+              <polygon points="9,-5 0,-1.5 9,5" fill="#3B82F6" stroke="#1D4ED8" strokeWidth="1.2" />
+              <circle cx="0" cy="0" r="3" fill="#93C5FD" stroke="#1D4ED8" strokeWidth="1.2" />
+            </g>
           )}
 
           {/* Feet / Paws */}
